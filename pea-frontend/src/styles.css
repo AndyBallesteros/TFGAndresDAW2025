@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.colorPrincipal{
+    color: #ffdb23;
+}
+.colorPrincipal2{
+    color: #e7343a;
+}
+
+.colorSecundario{
+    color: #1d4ed8; 
+}

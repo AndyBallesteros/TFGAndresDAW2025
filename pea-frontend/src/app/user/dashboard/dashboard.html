@@ -1,0 +1,23 @@
+<div class="container mx-auto p-6 bg-neutral-50 min-h-screen">
+  <div class="bg-[#e7343a] p-8 rounded-lg shadow-lg mb-8">
+    <h1 class="text-3xl font-bold text-white mb-4">{{ welcomeTitlePrefix }} {{ currentUser?.username }}</h1>
+    <p class="text-lg text-neutral-700">{{ dashboardSubtitle }}</p>
+
+    <div class="mt-6 text-center">
+      <a [routerLink]="['/submit-article']"
+         class="bg-[#1d4ed8] hover:bg-[#301dd8] text-white font-bold py-3 px-8 rounded-full text-xl transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-lg inline-block">
+        {{ sendNewArticleButton }}
+      </a>
+    </div>
+  </div>
+
+  <section class="bg-white p-8 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-neutral-900 mb-6 border-b-2 border-primary-500 pb-2">{{ myArticlesSectionTitle }}</h2>
+    <div *ngIf="userArticles.length === 0" class="text-center text-neutral-600 py-8">
+      <p>{{ noArticlesMessage }} {{ noArticlesCallToAction }}</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <app-article-card *ngFor="let article of userArticles" [article]="article"></app-article-card>
+    </div>
+  </section>
+</div>

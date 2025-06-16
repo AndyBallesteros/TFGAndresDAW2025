@@ -1,0 +1,13 @@
+<div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-[1.02] duration-300">
+    <img *ngIf="article.imageUrl" [src]="article.imageUrl" [alt]="article.title" class="w-full h-48 object-cover">
+    <div class="p-4">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2 leading-tight">{{ article.title }}</h2>
+      <p class="text-gray-700 text-sm mb-3 line-clamp-3">{{ article.subtitle }}</p> <div class="text-xs text-gray-500 mb-4 flex justify-between items-center">
+        <span>Por: <span class="font-medium text-gray-600">{{ article.author }}</span></span>
+        <span>Fecha: <span class="font-medium text-gray-600">{{(article.created_at) }}</span></span>
+      </div>
+      <a [routerLink]="['/article', article.id]" class="block text-center bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
+        Leer más
+      </a>
+    </div>
+</div>

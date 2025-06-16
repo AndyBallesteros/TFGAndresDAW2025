@@ -1,0 +1,30 @@
+# Directorios de Node
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# .cache/ # Si hay carpetas de caché
+
+# Archivos de configuración de entorno (MUY IMPORTANTE para claves API y Nodemailer)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# Si tienes un archivo específico para claves, como environment.prod.ts (que se genera)
+# o un archivo de desarrollo que carga las claves directamente:
+# src/environments/environment.ts # Solo si contiene claves directamente y no variables
+# src/environments/environment.prod.ts # También si contiene claves
+
+# Archivos específicos de IDEs
+.idea/
+.vscode/
+*.swp
+*.bak
+*.swo
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

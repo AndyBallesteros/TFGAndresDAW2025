@@ -1,0 +1,27 @@
+<div class="container mx-auto p-6 bg-neutral-50 min-h-screen">
+  <header class="bg-[#e7343a] text-center py-8 bg-primary-500 text-white rounded-lg shadow-md mb-8">
+    <h1 class="text-4xl font-extrabold mb-2">{{ headerTitle }}</h1>
+    <p class="text-xl opacity-90">{{ headerSubtitle }}</p>
+  </header>
+
+  <section class="mb-12">
+    <h2 class="text-3xl font-bold text-neutral-900 mb-6 p-4 border-b-2 border-accent-400 pb-2">{{ articlesSectionTitle }}</h2>
+
+    <div *ngIf="isLoading" class="text-center py-8">
+      <p class="text-lg text-neutral-700">{{ loadingMessage }}</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="bg-danger-500 text-white p-4 rounded-md text-center">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && articles.length === 0" class="text-center text-neutral-600 py-8">
+      <p>{{ noArticlesMessage }} {{ noArticlesCallToAction }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && articles.length > 0"
+         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <app-article-card *ngFor="let article of articles" [article]="article"></app-article-card>
+    </div>
+  </section>
+</div>

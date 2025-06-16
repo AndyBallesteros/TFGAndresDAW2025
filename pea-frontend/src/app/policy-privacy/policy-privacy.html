@@ -1,0 +1,71 @@
+<div class="container mx-auto p-6 bg-white rounded-lg shadow-lg my-8 max-w-3xl">
+  <h1 class="text-4xl font-extrabold text-[#e7343a] text-center mb-4">{{ pageTitle }}</h1>
+  <p class="text-sm text-gray-500 text-center mb-8">{{ lastUpdated }}</p>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ introductionTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed">{{ introductionParagraph }}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ informationCollectionTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed mb-2">{{ infoCollectedParagraph1 }}</p>
+    <ul class="list-disc list-inside text-gray-700 ml-4 mb-4">
+      <li>{{ infoCollectedListItem1 }}</li>
+      <li>{{ infoCollectedListItem2 }}</li>
+      <li>{{ infoCollectedListItem3 }}</li>
+      <li>{{ infoCollectedListItem4 }}</li>
+    </ul>
+    <p class="text-gray-700 leading-relaxed">{{ infoCollectedParagraph2 }}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ useOfInformationTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed mb-2">{{ useOfInformationParagraph1 }}</p>
+    <ul class="list-disc list-inside text-gray-700 ml-4 mb-4">
+      <li>{{ useOfInformationListItem1 }}</li>
+      <li>{{ useOfInformationListItem2 }}</li>
+      <li>{{ useOfInformationListItem3 }}</li>
+      <li>{{ useOfInformationListItem4 }}</li>
+      <li>{{ useOfInformationListItem5 }}</li>
+      <li>{{ useOfInformationListItem6 }}</li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ informationSharingTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed mb-2">{{ informationSharingParagraph1 }}</p>
+    <ul class="list-disc list-inside text-gray-700 ml-4 mb-4">
+      <li>{{ informationSharingListItem1 }}</li>
+      <li>{{ informationSharingListItem2 }}</li>
+      <li>{{ informationSharingListItem3 }}</li>
+      <li>{{ informationSharingListItem4 }}</li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ yourRightsTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed">{{ yourRightsParagraph }}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ securityMeasuresTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed">{{ securityMeasuresParagraph }}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ changesToPolicyTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed">{{ changesToPolicyParagraph }}</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ contactUsTitle }}</h2>
+    <p class="text-gray-700 leading-relaxed">{{ contactUsParagraph }}</p>
+    <p class="text-gray-700 leading-relaxed mt-2">Email: <a href="mailto:{{ contactUsEmail }}" class="text-blue-600 hover:underline">{{ contactUsEmail }}</a></p>
+  </section>
+
+  <div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+    <p class="font-bold">{{ disclaimerTitle }}</p>
+    <p class="text-sm">{{ disclaimerParagraph }}</p>
+  </div>
+</div>

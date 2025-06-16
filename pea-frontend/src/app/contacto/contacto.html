@@ -1,0 +1,79 @@
+<div class="max-w-xl mx-auto p-8 border border-gray-200 rounded-lg shadow-lg bg-white mt-10 mb-10">
+  <h2 class="text-3xl font-bold text-center text-[#e7343a] mb-6">{{ pageTitle }}</h2>
+
+  <p class="text-base text-gray-600 leading-relaxed mb-8 text-justify">
+    {{ introParagraph1 }}
+    {{ introParagraph2 }}
+  </p>
+  <p class="text-base text-gray-600 leading-relaxed mb-8 text-justify">
+    {{ introParagraph3 }}
+  </p>
+
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="mb-5">
+      <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">{{ nameLabel }}</label>
+      <input type="text" id="nombre" formControlName="nombre"
+             class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+             [class.border-red-500]="f['nombre'].invalid && (f['nombre'].dirty || f['nombre'].touched || formSubmitted)">
+      <div *ngIf="f['nombre'].invalid && (f['nombre'].dirty || f['nombre'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
+        <div *ngIf="f['nombre'].errors?.['required']">{{ nameRequiredError }}</div>
+        <div *ngIf="f['nombre'].errors?.['minlength']">{{ nameMinLengthError }}</div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <label for="email" class="block text-gray-700 text-sm font-bold mb-2">{{ emailLabel }}</label>
+      <input type="email" id="email" formControlName="email"
+             class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+             [class.border-red-500]="f['email'].invalid && (f['email'].dirty || f['email'].touched || formSubmitted)">
+      <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
+        <div *ngIf="f['email'].errors?.['required']">{{ emailRequiredError }}</div>
+        <div *ngIf="f['email'].errors?.['email']">{{ emailInvalidError }}</div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <label for="asunto" class="block text-gray-700 text-sm font-bold mb-2">{{ subjectLabel }}</label>
+      <input type="text" id="asunto" formControlName="asunto"
+             class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+             [class.border-red-500]="f['asunto'].invalid && (f['asunto'].dirty || f['asunto'].touched || formSubmitted)">
+      <div *ngIf="f['asunto'].invalid && (f['asunto'].dirty || f['asunto'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
+        <div *ngIf="f['asunto'].errors?.['required']">{{ subjectRequiredError }}</div>
+        <div *ngIf="f['asunto'].errors?.['minlength']">{{ subjectMinLengthError }}</div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <label for="mensaje" class="block text-gray-700 text-sm font-bold mb-2">{{ messageLabel }}</label>
+      <textarea id="mensaje" formControlName="mensaje" rows="5"
+                class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                [class.border-red-500]="f['mensaje'].invalid && (f['mensaje'].dirty || f['mensaje'].touched || formSubmitted)"></textarea>
+      <div *ngIf="f['mensaje'].invalid && (f['mensaje'].dirty || f['mensaje'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
+        <div *ngIf="f['mensaje'].errors?.['required']">{{ messageRequiredError }}</div>
+        <div *ngIf="f['mensaje'].errors?.['minlength']">{{ messageMinLengthError }}</div>
+      </div>
+    </div>
+
+    <div class="mb-6 text-center">
+      <div #reCaptchaContainer class="inline-block"></div>
+
+      <div *ngIf="!recaptchaResponse && formSubmitted" class="text-red-500 text-xs italic mt-2 block">
+        {{ captchaRequiredError }}
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="isSubmitDisabled()"
+            class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
+            [class.opacity-50]="isSubmitDisabled()" [class.cursor-not-allowed]="isSubmitDisabled()">
+      <span *ngIf="isLoading" class="inline-block w-4 h-4 mr-2 border-2 border-solid border-white border-r-transparent rounded-full animate-spin" role="status" aria-hidden="true"></span>
+      {{ isLoading ? sendingButtonText : sendButtonText }}
+    </button>
+
+    <div *ngIf="submitMessage"
+         class="p-4 mt-6 rounded-md text-center"
+         [class.bg-green-100]="submitMessage.includes('éxito')" [class.text-green-700]="submitMessage.includes('éxito')" [class.border-green-400]="submitMessage.includes('éxito')"
+         [class.bg-red-100]="submitMessage.includes('error')" [class.text-red-700]="submitMessage.includes('error')" [class.border-red-400]="submitMessage.includes('error')"
+         [class.border]="true"> {{ submitMessage }}
+    </div>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<div class="container mx-auto p-6 bg-neutral-50 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-3xl font-bold text-[#e7343a] text-center mb-4">{{ pageTitle }}</h2>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">{{ emailLabel }}</label>
+        <input type="email" id="email" [(ngModel)]="email" name="email" required
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">{{ passwordLabel }}</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+      </div>
+
+      <p *ngIf="successMessage" class="text-green-600 text-sm text-center">{{ successMessage }}</p>
+      <p *ngIf="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
+
+      <button type="submit"
+              class="w-full bg-[#e7343a] text-white font-bold py-2 px-4 rounded-md hover:bg-[#942226] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-500 transition duration-300">
+        {{ loginButtonText }}
+      </button>
+    </form>
+    <p class="mt-6 text-center text-sm text-gray-600">
+      {{ noAccountText }} <a [routerLink]="['/register']" class="font-medium text-[#e7343a] hover:text-[#942226]">{{ registerLinkText }}</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PeaFrontend</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <script>
+    window.reCaptchaApiReady = false;
+    window.reCaptchaRenderQueue = []; 
+
+    window.reCaptchaOnloadCallback = function() {
+      window.reCaptchaApiReady = true;
+      while (window.reCaptchaRenderQueue.length > 0) {
+        const renderFn = window.reCaptchaRenderQueue.shift();
+        renderFn(); 
+      }
+    };
+
+    window.reCaptchaVerifyCallback = function(response) { };
+    window.reCaptchaExpiredCallback = function() { };
+
+  </script>
+
+  <app-root></app-root>
+  <script src="https://www.google.com/recaptcha/api.js?onload=reCaptchaOnloadCallback&render=explicit" async defer></script>
+
+</body>
+</html>

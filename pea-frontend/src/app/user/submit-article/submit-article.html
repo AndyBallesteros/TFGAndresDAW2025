@@ -1,0 +1,81 @@
+<div class="container mx-auto p-6 bg-neutral-50 min-h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl mx-auto">
+    <h2 class=" text-3xl font-bold text-[#e7343a] text-center mb-6 border-b-2 border-primary-500 pb-2">{{ pageTitle }}</h2>
+
+    <form (ngSubmit)="onSubmit(articleForm)" class="space-y-6" #articleForm="ngForm">
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700">{{ titleLabel }}</label>
+        <input type="text" id="title" [(ngModel)]="newArticle.title" name="title"
+               required minlength="5" maxlength="100" #titleField="ngModel"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+        <div *ngIf="titleField.invalid && (titleField.dirty || titleField.touched)" class="text-red-500 text-xs mt-1">
+          <div *ngIf="titleField.errors?.['required']">
+            {{ titleRequiredError }}
+          </div>
+          <div *ngIf="titleField.errors?.['minlength']">
+            {{ titleMinLengthError }}
+          </div>
+          <div *ngIf="titleField.errors?.['maxlength']">
+            {{ titleMaxLengthError }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="subtitle" class="block text-sm font-medium text-gray-700">{{ subtitleLabel }}</label>
+        <textarea id="subtitle" [(ngModel)]="newArticle.subtitle" name="subtitle" rows="3"
+                  required minlength="10" maxlength="250" #subtitleField="ngModel"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm resize-y"></textarea>
+        <div *ngIf="subtitleField.invalid && (subtitleField.dirty || subtitleField.touched)" class="text-red-500 text-xs mt-1">
+          <div *ngIf="subtitleField.errors?.['required']">
+            {{ subtitleRequiredError }}
+          </div>
+          <div *ngIf="subtitleField.errors?.['minlength']">
+            {{ subtitleMinLengthError }}
+          </div>
+          <div *ngIf="subtitleField.errors?.['maxlength']">
+            {{ subtitleMaxLengthError }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="content" class="block text-sm font-medium text-gray-700">{{ contentLabel }}</label>
+        <textarea id="content" [(ngModel)]="newArticle.content" name="content" rows="10"
+                  required minlength="50" #contentField="ngModel"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm resize-y"></textarea>
+        <div *ngIf="contentField.invalid && (contentField.dirty || contentField.touched)" class="text-red-500 text-xs mt-1">
+          <div *ngIf="contentField.errors?.['required']">
+            {{ contentRequiredError }}
+          </div>
+          <div *ngIf="contentField.errors?.['minlength']">
+            {{ contentMinLengthError }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="imageUpload" class="block text-sm font-medium text-gray-700">{{ imageUploadLabel }}</label>
+        <input type="file" id="imageUpload" (change)="onFileSelected($event)" accept="image/*"
+               class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0 file:text-sm file:font-semibold
+                      file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
+        <p *ngIf="selectedFile" class="mt-2 text-sm text-gray-500">{{ fileSelectedText }} {{ selectedFile.name }}</p>
+        <div *ngIf="!selectedFile && articleForm.submitted" class="text-red-500 text-xs mt-1">
+            {{ imageRequiredError }}
+        </div>
+      </div>
+
+      <p *ngIf="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
+      <p *ngIf="successMessage" class="text-green-600 text-sm text-center">{{ successMessage }}</p>
+      <p *ngIf="isLoading" class="text-blue-600 text-sm text-center">{{ uploadingMessage }}</p>
+
+      <button type="submit"
+              [disabled]="articleForm.invalid || isLoading || !selectedFile"
+              class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-300"
+              [ngClass]="{'opacity-50 cursor-not-allowed': articleForm.invalid || isLoading || !selectedFile}">
+        {{ isLoading ? sendingButtonText : submitButtonText }}
+      </button>
+    </form>
+  </div>
+</div>
