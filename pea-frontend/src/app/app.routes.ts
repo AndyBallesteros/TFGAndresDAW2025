@@ -11,6 +11,7 @@ import { EmailConfirmationComponent } from './auth/email-confirmation/email-conf
 import { ContactoComponent } from './contacto/contacto'; 
 import { PrivacyPolicyComponent } from './policy-privacy/policy-privacy'; 
 import { TermsOfServiceComponent } from './terms-service/terms-service'; 
+import { NoticiaComponent } from './noticias/noticia/noticia';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,8 +25,7 @@ export const routes: Routes = [
   { path: 'contact', component: ContactoComponent },
   { path: 'politica-privacidad', component: PrivacyPolicyComponent },
   { path: 'terminos-servicio', component: TermsOfServiceComponent }, 
-
-  // { path: 'article/:id', component: ArticleDetailComponent },
+  { path: 'article/:id', component: NoticiaComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,

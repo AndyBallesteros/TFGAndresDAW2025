@@ -2,8 +2,7 @@
 
   <section class="relative text-white py-20 px-6 rounded-lg shadow-2xl mb-12 overflow-hidden">
     <div class="absolute inset-0 bg-cover bg-center bg-fixed" 
-          style="background-image: url('/assets/logoPEA.png'); background-size: cover; background-repeat: no-repeat; z-index: 0;">
-
+         style="background-image: url('/assets/logoPEA.png'); background-size: cover; background-repeat: no-repeat; z-index: 0;">
     </div>
     <div class="absolute inset-0 bg-gradient-to-br from-[#e7343a] to-[#942226] opacity-90 z-10"></div>
     
@@ -50,6 +49,7 @@
       {{ articlesSectionTitle }}
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Noticia destacada si existe y NO está en la lista de entradas recientes -->
       <div *ngIf="shouldShowFeaturedArticleSeparately"
            class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-[1.03] duration-300">
         <img [src]="noticiaDestacada!.imageUrl" [alt]="noticiaDestacada!.title" class="w-full h-48 object-cover">
@@ -59,12 +59,13 @@
           <div class="text-xs text-gray-500 mb-4">
             <span>{{ formatDate(noticiaDestacada!.created_at) }}</span> por <span class="font-medium">{{ noticiaDestacada!.author || 'Autor Desconocido' }}</span>
           </div>
-          <a [routerLink]="['/noticia', noticiaDestacada!.id?.toString()]"
+          <a [routerLink]="['/article', noticiaDestacada!.id?.toString()]"
              class="bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
             Leer más
           </a>
         </div>
       </div>
+      <!-- Las otras entradas recientes -->
       <div *ngFor="let entrada of entradasRecientes"
            class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-[1.03] duration-300">
         <img [src]="entrada.imageUrl" [alt]="entrada.title" class="w-full h-48 object-cover">
@@ -74,7 +75,7 @@
           <div class="text-xs text-gray-500 mb-4">
             <span>{{ formatDate(entrada.created_at) }}</span> por <span class="font-medium">{{ entrada.author || 'Autor Desconocido' }}</span>
           </div>
-          <a [routerLink]="['/noticia', entrada.id?.toString()]"
+          <a [routerLink]="['/article', entrada.id?.toString()]"
              class="bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
             Leer más
           </a>
@@ -108,7 +109,6 @@
       {{ ctaFooterButton }}
     </a>
   </section>
-
 
   <style>
     .bg-pattern {
