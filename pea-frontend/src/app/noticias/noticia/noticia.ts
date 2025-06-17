@@ -1,17 +1,19 @@
+// src/app/noticias/noticia/noticia.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ArticleService } from '../../services/article'; 
-import { Article } from '../../models/article.model'; 
+import { ArticleService } from '../../services/article';
+import { Article } from '../../models/article.model';
+import { CommentsSectionComponent } from '../../comments-section/comments-section'; 
 
 @Component({
   selector: 'app-noticia',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CommentsSectionComponent],
   templateUrl: './noticia.html',
   // styleUrl: './noticia.css'
 })
-export class NoticiaComponent implements OnInit {
+export class NoticiaComponent implements OnInit { 
   article: Article | null = null;
   isLoading: boolean = true;
   errorMessage: string | null = null;
@@ -22,22 +24,26 @@ export class NoticiaComponent implements OnInit {
   byAuthorText: string = 'Por:';
   publishedOnText: string = 'Publicado el:';
   backToNewsButtonText: string = 'Volver a Noticias';
+  unknownAuthorFallback: string = 'Autor Desconocido';
+  unknownDateFallback: string = 'Fecha desconocida';
+  invalidDateFallback: string = 'Fecha inválida';
 
   constructor(
     private route: ActivatedRoute, 
-    private router: Router,       
+    private router: Router,
     private articleService: ArticleService
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const articleId = params.get('id');
+
       if (articleId) {
         this.loadArticle(articleId);
       } else {
         this.errorMessage = this.notFoundMessage;
         this.isLoading = false;
-        console.error('ArticleDetailComponent: ID de artículo no proporcionado en la URL.');
+        console.error('NoticiaComponent: ID de artículo no proporcionado en la URL.');
       }
     });
   }
@@ -49,28 +55,28 @@ export class NoticiaComponent implements OnInit {
       next: (article) => {
         if (article) {
           this.article = article;
-          console.log('ArticleDetailComponent: Artículo cargado:', this.article);
+          console.log('NoticiaComponent: Artículo cargado:', this.article);
         } else {
           this.errorMessage = this.notFoundMessage;
-          console.warn('ArticleDetailComponent: Artículo no encontrado para ID:', id);
+          console.warn('NoticiaComponent: Artículo no encontrado para ID:', id);
         }
         this.isLoading = false;
       },
       error: (err) => {
         this.errorMessage = this.errorMessageDefault;
         this.isLoading = false;
-        console.error('ArticleDetailComponent: Error al cargar el artículo:', err);
+        console.error('NoticiaComponent: Error al cargar el artículo:', err);
       }
     });
   }
 
   formatDate(dateString: string | undefined): string {
     if (!dateString) {
-      return 'Fecha desconocida';
+      return this.unknownDateFallback;
     }
     const articleDate = new Date(dateString);
     if (isNaN(articleDate.getTime())) {
-      return 'Fecha inválida';
+      return this.invalidDateFallback;
     }
     return articleDate.toLocaleDateString('es-ES', {
       year: 'numeric',

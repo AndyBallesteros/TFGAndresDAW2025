@@ -1,15 +1,7 @@
-// src/app/app.component.ts
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router'; 
 import { CommonModule } from '@angular/common'; 
 import { NavbarComponent } from "./nav-bar/nav-bar"; 
-import { HomeComponent } from "./home/home"; 
-import { AboutComponent } from "./about/about";
-import { RegisterComponent } from './auth/register/register'; 
-import { LoginComponent } from './auth/login/login'; 
-import { DashboardComponent } from './user/dashboard/dashboard'; 
-import { SubmitArticleComponent } from './user/submit-article/submit-article'; 
-import { NoticiasListComponent } from './noticias/noticias-list/noticias-list'; 
 import { FooterComponent } from './footer/footer';
 @Component({
   selector: 'app-root',
@@ -19,17 +11,25 @@ import { FooterComponent } from './footer/footer';
     RouterOutlet, 
     NavbarComponent,
     FooterComponent,
-    // HomeComponent,
-    // AboutComponent,
-    // RegisterComponent,
-    // LoginComponent,
-    // DashboardComponent,
-    // SubmitArticleComponent,
-    // NoticiasListComponent
   ],
   templateUrl: './app.html', 
   styleUrl: './app.css' 
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   protected title = 'Politólogos en Acción'; 
+  showScrollToTopButton: boolean = false;
+  constructor (){}
+
+  ngOnInit(): void{
+
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.showScrollToTopButton = window.pageYOffset > 200;
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
 }

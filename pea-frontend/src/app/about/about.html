@@ -12,13 +12,34 @@
     </h3>
     <div class="flex flex-col md:flex-row items-center md:space-x-8">
       <div class="md:w-1/3 mb-6 md:mb-0">
-        <img src="https://placehold.co/400x400/3498db/ffffff?text=Equipo" [alt]="teamImageAlt" class="rounded-full w-48 h-48 object-cover mx-auto shadow-md">
+        <img src="/assets/PEA_Team.JPG" [alt]="teamImageAlt" class="rounded-full w-48 h-48 object-cover mx-auto shadow-md">
       </div>
-      <div class="md:w-2/3 text-lg text-neutral-700 leading-relaxed">
-        <p class="mb-4">
+      <div class="md:w-2/3 leading-loose">
+        <p class="mb-4 text-xl text-neutral-700">
           {{ teamDescription }}
         </p>
+        <p class="text-[#e7343a] text-right">
+          {{teamQuote}}
+        </p>
       </div>
+    </div>
+  </section>
+  <section class="bg-white p-8 rounded-lg shadow-lg mb-8 text-center">
+    <h2 class="text-3xl font-bold text-neutral-900 mb-6 border-b-2 border-accent-400 pb-2">{{ socialMediaTitle }}</h2>
+    <p class="text-lg text-neutral-700 leading-relaxed mb-8">
+      {{ socialMediaSubtitle }}
+    </p>
+    <div class="flex justify-center space-x-8 items-center">
+      <a *ngFor="let link of socialMediaLinks" [href]="link.url" target="_blank" rel="noopener noreferrer"
+         class="text-[#e7343a] hover:text-[#1d4ed8] transition-colors duration-350 transform hover:scale-110">
+        <svg class="h-10 w-10 md:h-14 md:w-14" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path *ngIf="link.icon === 'facebook'" d="M12 2C6.477 2 2 6.477 2 12c0 5.016 3.657 9.176 8.411 9.873V14.89h-2.54V12h2.54V9.764c0-2.522 1.543-3.906 3.793-3.906 1.088 0 2.031.193 2.29.28v2.51h-1.487c-1.291 0-1.542.614-1.542 1.517V12h2.89l-.47 2.89h-2.42V21.873C18.343 21.176 22 17.016 22 12c0-5.523-4.477-10-10-10z"/>
+          <path *ngIf="link.icon === 'twitter'" d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+          <path *ngIf="link.icon === 'tiktok'" d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/>
+          <path *ngIf="link.icon === 'instagram'" d="M12 2c3.232 0 3.638.015 4.907.072 1.17.054 1.745.244 2.188.423.47.195.837.452 1.22.836.384.384.641.75.836 1.22.179.443.369 1.018.423 2.188.057 1.269.072 1.675.072 4.907s-.015 3.638-.072 4.907c-.054 1.17-.244 1.745-.423 2.188a3.784 3.784 0 01-.836 1.22c-.384.384-.75.641-1.22.836-.443.179-1.018.369-2.188.423-1.269.057-1.675.072-4.907.072s-3.638-.015-4.907-.072c-1.17-.054-1.745-.244-2.188-.423a3.784 3.784 0 01-1.22-.836 3.784 3.784 0 01-.836-1.22c-.179-.443-.369-1.018-.423-2.188-.057-1.269-.072-1.675-.072-4.907s.015-3.638.072-4.907c.054-1.17.244-1.745.423-2.188a3.784 3.784 0 01.836-1.22 3.784 3.784 0 011.22-.836c.443-.179 1.018-.369 2.188-.423C8.362 2.015 8.768 2 12 2zm0 2.308c-3.102 0-3.487.012-4.708.067-1.042.049-1.393.204-1.61.288a2.535 2.535 0 00-.776.471 2.535 2.535 0 00-.471.776c-.084.217-.239.568-.288 1.61-.055 1.221-.067 1.606-.067 4.708s.012 3.487.067 4.708c.049 1.042.204 1.393.288 1.61a2.535 2.535 0 00.471.776 2.535 2.535 0 00.776.471c.217.084.568.239 1.61.288 1.221.055 1.606.067 4.708.067s3.487-.012 4.708-.067c1.042-.049 1.393-.204 1.61-.288a2.535 2.535 0 00.776-.471 2.535 2.535 0 00.471-.776c.084-.217.239-.568.288-1.61.055-1.221.067-1.606.067-4.708s-.012-3.487-.067-4.708c-.049-1.042-.204-1.393-.288-1.61a2.535 2.535 0 00-.471-.776 2.535 2.535 0 00-.776-.471c-.217-.084-.568-.239-1.61-.288C15.487 4.312 15.102 4.308 12 4.308zM12 7.74a4.26 4.26 0 100 8.52 4.26 4.26 0 000-8.52zM12 9.048a2.952 2.952 0 110 5.904 2.952 2.952 0 010-5.904zm4.618-3.036a1.018 1.018 0 100 2.036 1.018 1.018 0 000-2.036z"/>
+        </svg>
+        <span class="sr-only">{{ link.name }}</span>
+      </a>
     </div>
   </section>
 
@@ -46,7 +67,4 @@
       </a>
     </div>
   </section>
-
-
-
 </div>

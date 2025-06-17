@@ -17,7 +17,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
-  heroTitle: string = 'Politólogos en Acción: Tu Fuente para el Análisis Político Riguroso';
+  heroTitle: string = 'Politólogos en Acción: Una Fuente para el Análisis Político Riguroso';
   heroSubtitle: string = 'Un portal dedicado a la discusión informada y profunda de la ciencia política y las relaciones internacionales.';
   heroCtaJoin: string = 'Únete a la Comunidad';
   heroCtaExplore: string = 'Explora Artículos';
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     },
     {
       title: 'Fomentar la Comunidad Activa',
-      description: 'Un espacio para el debate constructivo entre académicos, estudiantes y ciudadanos interesados en la política.',
+      description: 'Un espacio para el debate constructivo entre académicos, estudiantes y ciudadanos interesados en la política. ¡Comenta en nuestros artículos!',
       icon: 'users'
     }
   ];
@@ -65,16 +65,13 @@ export class HomeComponent implements OnInit {
   loadRecentArticles(): void {
     this.isLoading = true;
     this.errorMessage = null;
-    console.log('HomeComponent: Iniciando carga de artículos recientes.');
 
     this.articleService.getRecentArticles(4).pipe( 
       finalize(() => {
         this.isLoading = false;
-        console.log('HomeComponent: Carga de artículos finalizada (isLoading = false).');
       })
     ).subscribe({
       next: (articles: Article[]) => {
-        console.log('HomeComponent: Artículos recientes recibidos en next:', articles);
         if (articles && articles.length > 0) {
           this.noticiaDestacada = articles[0];
           this.entradasRecientes = articles.slice(1, 4);
@@ -108,15 +105,5 @@ export class HomeComponent implements OnInit {
       month: 'long',
       day: 'numeric'
     });
-  }
-
-  verNoticia(id: string | undefined, titulo: string | undefined): void {
-    if (id && titulo) {
-      console.log(`Simulando navegación a la noticia "${titulo}" (ID: ${id})`);
-      // En un proyecto real, redirigirías al componente de detalle del artículo:
-      // this.router.navigate(['/articulo', id]);
-    } else {
-      console.warn('HomeComponent: No se pudo navegar a la noticia, ID o título no definidos.');
-    }
   }
 }

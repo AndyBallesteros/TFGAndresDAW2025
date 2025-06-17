@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class ApprovedGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -15,17 +15,19 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.authService.user$.pipe( 
+    return this.authService.user$.pipe(
       map(user => {
         if (user && user.isApproved) {
+          console.log('ApprovedGuard: Acceso permitido. Usuario autenticado y aprobado.');
           return true; 
         } else {
           if (user && !user.isApproved) {
-            alert('Tu cuenta aún no ha sido aprobada por un administrador. Por favor, espera la aprobación.');
+            alert('Tu cuenta aún no ha sido aprobada por un administrador para esta acción. Por favor, espera la aprobación.');
+            return this.router.createUrlTree(['/dashboard']); 
           } else {
             alert('Necesitas iniciar sesión para acceder a esta página.');
+            return this.router.createUrlTree(['/login']);
           }
-          return this.router.createUrlTree(['/login']); 
         }
       })
     );
