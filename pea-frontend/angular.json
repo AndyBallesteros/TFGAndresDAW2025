@@ -14,9 +14,12 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "outputPath": "dist/pea-frontend/browser",
+            "index": "src/index.html",
             "polyfills": [
               "zone.js"
             ],
+            "baseHref": "/",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
