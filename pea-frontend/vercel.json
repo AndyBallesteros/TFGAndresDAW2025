@@ -3,6 +3,13 @@
     {
       "src": "api/*.js",
       "use": "@vercel/node@latest"
+    },
+    {
+        "src": "package.json",
+        "use": "@vercel/angular@latest",
+        "config": {
+            "angularApp": "pea-frontend" 
+      }
     }
   ],
   "routes": [
