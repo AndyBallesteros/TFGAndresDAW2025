@@ -12,7 +12,7 @@
     },
     {
       "src": "/(.*)", 
-      "dest": "/dist/pea-frontend/index.html" 
+      "dest": "/dist/pea-frontend/browser/index.html" 
     }
   ]
 }
