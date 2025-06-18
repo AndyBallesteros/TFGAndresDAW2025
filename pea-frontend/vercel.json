@@ -1,23 +1,17 @@
 {
   "builds": [
     {
-      "src": "package.json",
-      "config": {
-        "outputDirectory": "dist/pea-frontend"
-      }
-    },
-    {
       "src": "api/*.js",
-      "use": "@vercel/node@latest" 
+      "use": "@vercel/node@latest"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)", 
-      "dest": "/api/$1"   
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/(.*)", 
       "dest": "/dist/pea-frontend/index.html" 
     }
   ]
