@@ -61,7 +61,7 @@ export class ContactoComponent implements OnInit, AfterViewInit {
 
   recaptchaSiteKey = environment.recaptchaSiteKey;
 
-  private backendUrl = 'http://localhost:3000/api/send-email.js';
+  private backendUrl = '/api/send-email';
 
   constructor(private fb: FormBuilder, private http: HttpClient, private renderer: Renderer2) { }
 
