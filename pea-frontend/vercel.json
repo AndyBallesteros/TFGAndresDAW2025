@@ -1,12 +1,29 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "pea-frontend/angular.json",
+      "use": "@vercel/angular",
+      "config": {
+        "outputDirectory": "dist/pea-frontend/browser"
+      }
+    },
+    {
+      "src": "pea-nodemailer/index.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["pea-nodemailer/**"]
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "pea-nodemailer/index.js"
     },
     {
-      "src": "/(.*)", 
-      "dest": "/index.html" 
+      "src": "/(.*)",
+      "dest": "pea-frontend/dist/pea-frontend/browser/index.html"
     }
   ]
 }
