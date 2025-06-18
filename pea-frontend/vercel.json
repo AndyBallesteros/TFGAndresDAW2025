@@ -1,12 +1,27 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/pea-frontend/browser/**"]
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
     {
+      "src": "/(.*\\.(?:js|css|map|json|ico|txt|svg|png|jpg|jpeg|gif|webmanifest|woff|woff2|ttf|eot))",
+      "dest": "/dist/pea-frontend/browser/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/index.html" 
+      "dest": "/dist/pea-frontend/browser/index.html"
     }
-  ]
+  ],
+  "outputDirectory": "dist/pea-frontend/browser"
 }
