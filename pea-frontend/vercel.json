@@ -16,11 +16,11 @@
     },
     {
       "src": "/(.*\\.(?:js|css|map|json|ico|txt|svg|png|jpg|jpeg|gif|webmanifest|woff|woff2|ttf|eot))",
-      "dest": "$1"
+      "dest": "/dist/pea-frontend/browser/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/dist/pea-frontend/browser/index.html"
     }
   ],
   "outputDirectory": "dist/pea-frontend/browser"
