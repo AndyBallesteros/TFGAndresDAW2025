@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, Renderer2, ViewChild, ElementRef } fr
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environments'; 
+import { environment } from '../../environments/environment.prod'; 
 
 declare const grecaptcha: any;
 @Component({
