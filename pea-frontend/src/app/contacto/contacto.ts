@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environments'; 
 
 declare const grecaptcha: any;
-
 @Component({
   selector: 'app-contacto',
   standalone: true,
@@ -18,9 +17,7 @@ declare const grecaptcha: any;
   styleUrls: ['./contacto.css']
 })
 export class ContactoComponent implements OnInit, AfterViewInit { 
-
   @ViewChild('reCaptchaContainer') reCaptchaContainer!: ElementRef;
-
   contactForm!: FormGroup;
   recaptchaResponse: string | null = null;
   formSubmitted = false;
@@ -61,7 +58,7 @@ export class ContactoComponent implements OnInit, AfterViewInit {
 
   recaptchaSiteKey = environment.recaptchaSiteKey;
 
-  private backendUrl = '/api/send-email';
+  private backendUrl = environment.contactBackendUrl;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private renderer: Renderer2) { }
 
