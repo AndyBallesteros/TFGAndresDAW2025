@@ -3,8 +3,7 @@ export interface Article {
   title: string;
   subtitle: string;
   content: string;
-  imageUrl: string;
-
+  imageUrl: string | null;
   created_at?: string; 
   author_id?: string;
   author?: string;

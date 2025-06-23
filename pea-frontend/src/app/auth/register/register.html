@@ -1,27 +1,29 @@
-<div class="container mx-auto p-0 bg-neutral-50 min-h-screen flex items-center justify-center">
-  <section class="relative w-full h-full min-h-screen flex items-center justify-center overflow-hidden p-6 md:p-12">
-    <div class="absolute inset-0 bg-cover bg-center bg-fixed" 
+<div class="container mx-auto px-4 py-8 bg-neutral-50 min-h-screen flex items-center justify-center sm:px-6 lg:px-8">
+  <section class="relative w-full h-full min-h-screen flex items-center justify-center overflow-hidden p-4 sm:p-6 md:p-8">
+    <div class="absolute inset-0 bg-cover bg-center bg-fixed"
          style="background-image: url('/assets/Congreso.jpg'); background-size: cover; background-repeat: no-repeat; z-index: 0;">
     </div>
     <div class="absolute inset-0 bg-gradient-to-br from-[#e7343a] to-[#942226] opacity-60 z-10"></div>
-    
-    <div class="relative z-20 bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-      <h2 class="text-3xl font-bold text-[#e7343a] text-center mb-4">{{ pageTitle }}</h2>
-      <p class="text-base text-[#e7343a] leading-relaxed mb-2 text-center">
+
+    <div class="relative z-20 bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#e7343a] text-center mb-6 sm:mb-8">
+        {{ pageTitle }}
+      </h2>
+      <p class="text-base text-[#e7343a] leading-relaxed mb-2 text-center font-semibold">
         {{ importantNoticeTitle }}
       </p>
-      <p class="text-base text-gray-600 leading-relaxed mb-8 text-justify">
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-6 text-justify">
         {{ importantNoticeParagraph1 }}
       </p>
-      <p class="text-base text-gray-600 leading-relaxed mb-8 text-justify">
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-8 text-justify">
         {{ importantNoticeParagraph2 }}
       </p>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
         <div>
-          <label for="username" class="block text-sm font-medium text-gray-700">{{ usernameLabel }}</label>
+          <label for="username" class="block text-sm font-medium text-gray-700 mb-1">{{ usernameLabel }}</label>
           <input type="text" id="username" formControlName="username"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#e7343a] focus:border-[#e7343a] sm:text-sm"
           [class.border-red-500]="f['username'].invalid && (f['username'].dirty || f['username'].touched)">
           <div *ngIf="f['username'].invalid && (f['username'].dirty || f['username'].touched)" class="text-red-500 text-xs mt-1">
             <div *ngIf="f['username'].errors?.['required']">
@@ -36,10 +38,10 @@
           </div>
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">{{ emailLabel }}</label>
-          <input type="email" id="email" formControlName="email" 
-                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                 [class.border-red-500]="f['email'].invalid && (f['email'].dirty || f['email'].touched)">
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">{{ emailLabel }}</label>
+          <input type="email" id="email" formControlName="email"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#e7343a] focus:border-[#e7343a] sm:text-sm"
+                    [class.border-red-500]="f['email'].invalid && (f['email'].dirty || f['email'].touched)">
           <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched)" class="text-red-500 text-xs mt-1">
             <div *ngIf="f['email'].errors?.['required']">
               {{ emailRequiredError }}
@@ -50,10 +52,10 @@
           </div>
         </div>
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">{{ passwordLabel }}</label>
-          <input type="password" id="password" formControlName="password" 
-                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                 [class.border-red-500]="f['password'].invalid && (f['password'].dirty || f['password'].touched)">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">{{ passwordLabel }}</label>
+          <input type="password" id="password" formControlName="password"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#e7343a] focus:border-[#e7343a] sm:text-sm"
+                    [class.border-red-500]="f['password'].invalid && (f['password'].dirty || f['password'].touched)">
           <div *ngIf="f['password'].invalid && (f['password'].dirty || f['password'].touched)" class="text-red-500 text-xs mt-1">
             <div *ngIf="f['password'].errors?.['required']">
               {{ passwordRequiredError }}
@@ -74,14 +76,14 @@
         <p *ngIf="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
 
         <button type="submit" [disabled]="isSubmitDisabled()"
-                class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-300"
+                class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e7343a] transition duration-300"
                 [class.opacity-50]="isSubmitDisabled()" [class.cursor-not-allowed]="isSubmitDisabled()">
           <span *ngIf="isLoading" class="inline-block w-4 h-4 mr-2 border-2 border-solid border-white border-r-transparent rounded-full animate-spin" role="status" aria-hidden="true"></span>
           {{ isLoading ? sendingButtonText : registerButtonText }}
         </button>
       </form>
       <p class="mt-6 text-center text-sm text-gray-600">
-        {{ alreadyHaveAccountText }} <a [routerLink]="['/login']" class="font-medium text-[#e7343a] hover:text-[#942226]">{{ loginLinkText }}</a>
+        {{ alreadyHaveAccountText }} <a [routerLink]="['/login']" class="font-medium text-[#e7343a] hover:text-[#942226] transition-colors">{{ loginLinkText }}</a>
       </p>
     </div>
   </section>

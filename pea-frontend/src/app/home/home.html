@@ -1,80 +1,100 @@
-<div class="container mx-auto p-6 bg-gray-50 min-h-screen">
+<div class="container mx-auto p-4 sm:p-6 bg-gray-50 min-h-screen">
 
-  <section class="relative text-white py-20 px-6 rounded-lg shadow-2xl mb-12 overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center bg-fixed" 
-         style="background-image: url('assets/Congreso.jpg'); background-size: cover; background-repeat: no-repeat; z-index: 0;">
+  <section class="relative text-white py-16 md:py-24 px-4 sm:px-6 rounded-lg shadow-2xl mb-12 overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
+      style="background-image: url('assets/Congreso.jpg');">
     </div>
     <div class="absolute inset-0 bg-gradient-to-br from-[#e7343a] to-[#942226] opacity-80 z-10"></div>
-    
+
     <div class="relative z-20 text-center max-w-4xl mx-auto">
-      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight animate-fade-in-down">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight animate-fade-in-down">
         {{ heroTitle }}
       </h1>
-      <p class="text-xl md:text-2xl opacity-90 mb-8 animate-fade-in-up">
+      <p class="text-lg sm:text-xl md:text-2xl opacity-90 mb-8 animate-fade-in-up">
         {{ heroSubtitle }}
       </p>
-      <div class="space-x-4 animate-fade-in-up delay-200">
-        <a routerLink="/register" class="bg-white text-[#1d4ed8] hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transform transition-transform hover:scale-105 inline-block">
+      <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up delay-200">
+        <a routerLink="/register"
+          class="bg-white text-[#1d4ed8] hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transform transition-transform hover:scale-105 inline-block">
           {{ heroCtaJoin }}
         </a>
-        <a routerLink="/noticias" class="border-2 border-white text-white hover:bg-white hover:text-[#e7343a] font-bold py-3 px-8 rounded-full text-lg shadow-xl transform transition-transform hover:scale-105 inline-block">
+        <a routerLink="/noticias"
+          class="border-2 border-white text-white hover:bg-white hover:text-[#e7343a] font-bold py-3 px-8 rounded-full text-lg shadow-xl transform transition-transform hover:scale-105 inline-block">
           {{ heroCtaExplore }}
         </a>
       </div>
     </div>
   </section>
 
-  <section class="mb-12 bg-white p-8 rounded-lg shadow-lg">
-    <h2 class="text-4xl font-bold text-gray-800 text-center mb-8 border-b-2 border-[#1d4ed8] pb-4">
+  <section class="mb-12 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+    <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 text-center mb-8 border-b-2 border-[#1d4ed8] pb-4">
       {{ aboutUsTitle }}
     </h2>
-    <p class="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto mb-6">
+    <p class="text-base sm:text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto mb-6">
       {{ aboutUsIntro }}
     </p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-      <div *ngFor="let feature of features" class="bg-blue-50 p-6 rounded-lg shadow-md text-center transform transition-transform hover:scale-105 duration-300">
-        <div class="text-[#1d4ed8] text-5xl mb-4">
-          <svg *ngIf="feature.icon === 'book'" class="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.523 5.754 19 7.5 19s3.332-.477 4.5-1.253m0 0V5c2.144-.457 4.287-.457 6.43 0v13c-2.143-.457-4.286-.457-6.43 0z"></path></svg>
-          <svg *ngIf="feature.icon === 'globe'" class="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.01 12.01 0 002.944 12c0 2.879 1.146 5.474 3 7.424M12 21c-2.879 0-5.474-1.146-7.424-3M12 21c2.879 0 5.474-1.146 7.424-3m-.055-10.772A11.955 11.955 0 0112 2.944c2.879 0 5.474 1.146 7.424 3M12 21c-2.879 0-5.474-1.146-7.424-3m.055-10.772A11.955 11.955 0 0112 2.944c2.879 0 5.474 1.146 7.424 3"></path></svg>
-          <svg *ngIf="feature.icon === 'users'" class="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-1.066A7.978 7.978 0 0012 14c-2.347 0-4.498.882-6.066 2.378H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v11a2 2 0 01-2 2zM12 10a4 4 0 100-8 4 4 0 000 8z"></path></svg>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8">
+      <div *ngFor="let feature of features"
+        class="bg-blue-50 p-6 rounded-lg shadow-md text-center transform transition-transform hover:scale-105 duration-300">
+        <div class="text-[#1d4ed8] text-4xl sm:text-5xl mb-4">
+          <svg *ngIf="feature.icon === 'book'" class="mx-auto h-14 w-14 sm:h-16 sm:w-16" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.523 5.754 19 7.5 19s3.332-.477 4.5-1.253m0 0V5c2.144-.457 4.287-.457 6.43 0v13c-2.143-.457-4.286-.457-6.43 0z">
+            </path>
+          </svg>
+          <svg *ngIf="feature.icon === 'globe'" class="mx-auto h-14 w-14 sm:h-16 sm:w-16" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.01 12.01 0 002.944 12c0 2.879 1.146 5.474 3 7.424M12 21c-2.879 0-5.474-1.146-7.424-3M12 21c2.879 0 5.474-1.146 7.424-3m-.055-10.772A11.955 11.955 0 0112 2.944c2.879 0 5.474 1.146 7.424 3M12 21c-2.879 0-5.474-1.146-7.424-3m.055-10.772A11.955 11.955 0 0112 2.944c2.879 0 5.474 1.146 7.424 3">
+            </path>
+          </svg>
+          <svg *ngIf="feature.icon === 'users'" class="mx-auto h-14 w-14 sm:h-16 sm:w-16" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 20h-1.066A7.978 7.978 0 0012 14c-2.347 0-4.498.882-6.066 2.378H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v11a2 2 0 01-2 2zM12 10a4 4 0 100-8 4 4 0 000 8z">
+            </path>
+          </svg>
         </div>
-        <h3 class="text-2xl font-semibold text-gray-900 mb-3">{{ feature.title }}</h3>
-        <p class="text-gray-700">{{ feature.description }}</p>
+        <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 mb-3">{{ feature.title }}</h3>
+        <p class="text-gray-700 text-sm sm:text-base">{{ feature.description }}</p>
       </div>
     </div>
   </section>
 
   <section *ngIf="noticiaDestacada || entradasRecientes.length > 0" class="mb-12">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6 p-4 border-b-2 border-[#1d4ed8]">
+    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 p-4 border-b-2 border-[#1d4ed8]">
       {{ articlesSectionTitle }}
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
       <div *ngIf="shouldShowFeaturedArticleSeparately"
-           class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-[1.03] duration-300">
+        class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-[1.03] duration-300">
         <img [src]="noticiaDestacada!.imageUrl" [alt]="noticiaDestacada!.title" class="w-full h-48 object-cover">
         <div class="p-5">
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ noticiaDestacada!.title }}</h3>
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3">{{ noticiaDestacada!.title }}</h3>
           <p class="text-gray-700 text-sm leading-relaxed mb-4">{{ noticiaDestacada!.subtitle }}</p>
           <div class="text-xs text-gray-500 mb-4">
-            <span>{{ formatDate(noticiaDestacada!.created_at) }}</span> por <span class="font-medium">{{ noticiaDestacada!.author || 'Autor Desconocido' }}</span>
+            <span>{{ formatDate(noticiaDestacada!.created_at) }}</span> por <span class="font-medium">{{
+              noticiaDestacada!.author || 'Autor Desconocido' }}</span>
           </div>
           <a [routerLink]="['/article', noticiaDestacada!.id?.toString()]"
-             class="bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
+            class="bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
             Leer más
           </a>
         </div>
       </div>
       <div *ngFor="let entrada of entradasRecientes"
-           class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-[1.03] duration-300">
+        class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-[1.03] duration-300">
         <img [src]="entrada.imageUrl" [alt]="entrada.title" class="w-full h-48 object-cover">
         <div class="p-5">
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ entrada.title }}</h3>
+          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3">{{ entrada.title }}</h3>
           <p class="text-gray-700 text-sm leading-relaxed mb-4">{{ entrada.subtitle }}</p>
           <div class="text-xs text-gray-500 mb-4">
-            <span>{{ formatDate(entrada.created_at) }}</span> por <span class="font-medium">{{ entrada.author || 'Autor Desconocido' }}</span>
+            <span>{{ formatDate(entrada.created_at) }}</span> por <span class="font-medium">{{ entrada.author || 'Autor
+              Desconocido' }}</span>
           </div>
           <a [routerLink]="['/article', entrada.id?.toString()]"
-             class="bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
+            class="bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300 ease-in-out">
             Leer más
           </a>
         </div>
@@ -83,27 +103,33 @@
   </section>
 
   <div *ngIf="isLoading" class="text-center text-[#1d4ed8] my-8 flex items-center justify-center space-x-2">
-    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#1d4ed8]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#1d4ed8]" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24">
       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+      </path>
     </svg>
     <p>Cargando artículos...</p>
   </div>
-  <div *ngIf="errorMessage && !isLoading" class="text-center text-red-600 my-8 p-4 bg-red-100 border border-red-400 rounded-md">
+  <div *ngIf="errorMessage && !isLoading"
+    class="text-center text-red-600 my-8 p-4 bg-red-100 border border-red-400 rounded-md">
     <p>{{ errorMessage }}</p>
   </div>
-  <div *ngIf="!noticiaDestacada && entradasRecientes.length === 0 && !isLoading && !errorMessage" class="text-center text-gray-500 my-8 p-4 bg-gray-100 border border-gray-300 rounded-md">
+  <div *ngIf="!noticiaDestacada && entradasRecientes.length === 0 && !isLoading && !errorMessage"
+    class="text-center text-gray-500 my-8 p-4 bg-gray-100 border border-gray-300 rounded-md">
     <p>No hay artículos disponibles para mostrar.</p>
   </div>
 
-  <section class="text-center py-12 px-4 bg-[#1d4ed8] text-white rounded-lg shadow-md mb-8">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+  <section class="text-center py-10 sm:py-12 px-4 bg-[#1d4ed8] text-white rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
       {{ ctaFooterTitle }}
     </h2>
-    <p class="text-lg max-w-2xl mx-auto mb-6">
+    <p class="text-base sm:text-lg max-w-2xl mx-auto mb-6">
       {{ ctaFooterSubtitle }}
     </p>
-    <a routerLink="/register" class="bg-white text-[#e7343a] hover:bg-blue-200 font-bold py-3 px-8 rounded-full text-lg shadow-lg transform transition-transform hover:scale-105">
+    <a routerLink="/register"
+      class="bg-white text-[#e7343a] hover:bg-blue-200 font-bold py-3 px-8 rounded-full text-lg shadow-lg transform transition-transform hover:scale-105">
       {{ ctaFooterButton }}
     </a>
   </section>
@@ -114,20 +140,37 @@
     }
 
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .animate-fade-in-down {
       animation: fadeInDown 0.8s ease-out forwards;
     }
+
     .animate-fade-in-up {
       animation: fadeInUp 0.8s ease-out forwards;
     }
+
     .animate-fade-in-up.delay-200 {
       animation-delay: 0.2s;
     }

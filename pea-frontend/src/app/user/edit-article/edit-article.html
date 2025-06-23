@@ -4,7 +4,15 @@
       {{ pageTitle }}
     </h2>
 
-    <form (ngSubmit)="onSubmit(articleForm)" class="space-y-6" #articleForm="ngForm">
+    <div *ngIf="isLoading && !errorMessage" class="text-center py-8 text-blue-600">
+      <p>Cargando artículo para editar...</p>
+      </div>
+
+    <div *ngIf="errorMessage" class="bg-red-100 text-red-700 p-4 rounded-md text-center my-4 border border-red-400">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <form *ngIf="!isLoading && !errorMessage && newArticle.id" (ngSubmit)="onSubmit(articleForm)" class="space-y-6" #articleForm="ngForm">
       <div>
         <label for="title" class="block text-sm font-medium text-gray-700 mb-1">{{ titleLabel }}</label>
         <input type="text" id="title" [(ngModel)]="newArticle.title" name="title"
@@ -57,28 +65,50 @@
       </div>
 
       <div>
-        <label for="imageUpload" class="block text-sm font-medium text-gray-700 mb-1">{{ imageUploadLabel }}</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{ imageUploadLabel }}</label>
+        <div *ngIf="newArticle.imageUrl && !selectedFile" class="mb-4">
+          <p class="text-sm text-gray-600 mb-2">Imagen actual:</p>
+          <img [src]="newArticle.imageUrl" alt="Imagen actual del artículo" class="w-full h-32 object-cover rounded-md shadow-sm">
+          <button type="button" (click)="removeCurrentImage()" class="mt-2 text-red-600 hover:text-red-800 text-sm font-medium">
+            Eliminar imagen actual
+          </button>
+        </div>
+
         <input type="file" id="imageUpload" (change)="onFileSelected($event)" accept="image/*"
                class="mt-1 block w-full text-sm text-gray-600
                       file:mr-4 file:py-2 file:px-4
                       file:rounded-full file:border-0 file:text-sm file:font-semibold
                       file:bg-[#e7343a]/10 file:text-[#e7343a] hover:file:bg-[#e7343a]/20 cursor-pointer">
-        <p *ngIf="selectedFile" class="mt-2 text-sm text-gray-500">{{ fileSelectedText }} <span class="font-medium">{{ selectedFile.name }}</span></p>
-        <div *ngIf="!selectedFile && articleForm.submitted" class="text-red-500 text-xs mt-1">
-            {{ imageRequiredError }}
+        <p *ngIf="selectedFile && isNewFileSelected()" class="mt-2 text-sm text-gray-500">
+          {{ fileSelectedText }} <span class="font-medium">{{ selectedFile.name }}</span>
+        </p>
+        <div *ngIf="!selectedFile && !newArticle.imageUrl && articleForm.submitted" class="text-red-500 text-xs mt-1">
+          {{ imageRequiredError }}
         </div>
       </div>
 
-      <p *ngIf="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
+      <p *ngIf="errorMessage && !isLoading" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
       <p *ngIf="successMessage" class="text-green-600 text-sm text-center">{{ successMessage }}</p>
-      <p *ngIf="isLoading" class="text-blue-600 text-sm text-center">{{ uploadingMessage }}</p>
+      <p *ngIf="isLoading || isUploadingImage" class="text-blue-600 text-sm text-center">
+        <span *ngIf="isUploadingImage">{{ uploadingMessage }}</span>
+        <span *ngIf="isLoading && !isUploadingImage">{{ sendingButtonText }}</span>
+        <span class="inline-block w-4 h-4 ml-2 border-2 border-solid border-blue-600 border-r-transparent rounded-full animate-spin" role="status" aria-hidden="true"></span>
+      </p>
 
       <button type="submit"
-              [disabled]="articleForm.invalid || isLoading || !selectedFile"
+              [disabled]="articleForm.invalid || isLoading || isUploadingImage || (!selectedFile && !newArticle.imageUrl)"
               class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e7343a] transition duration-300"
-              [ngClass]="{'opacity-50 cursor-not-allowed': articleForm.invalid || isLoading || !selectedFile}">
-        {{ isLoading ? sendingButtonText : submitButtonText }}
+              [ngClass]="{'opacity-50 cursor-not-allowed': articleForm.invalid || isLoading || isUploadingImage || (!selectedFile && !newArticle.imageUrl)}">
+        {{ isLoading || isUploadingImage ? sendingButtonText : submitButtonText }}
       </button>
+
+      <div class="text-center mt-4">
+        <a [routerLink]="['/dashboard']"
+           class="inline-flex items-center text-blue-600 hover:text-blue-800 transition duration-300">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          Volver al Dashboard
+        </a>
+      </div>
     </form>
   </div>
 </div>

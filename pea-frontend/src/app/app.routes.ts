@@ -13,6 +13,7 @@ import { TermsOfServiceComponent } from './terms-service/terms-service';
 import { NoticiaComponent } from './noticias/noticia/noticia';
 import { LoggedInGuard } from './guards/logged-in.guard';
 import { ApprovedGuard } from './guards/Approved.guard';
+import { EditArticleComponent } from './user/edit-article/edit-article';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,6 +34,11 @@ export const routes: Routes = [
   {
     path: 'submit-article',
     component: SubmitArticleComponent,
+    canActivate: [ApprovedGuard]
+  },
+  {
+    path: 'edit-article/:id',
+    component:EditArticleComponent,
     canActivate: [ApprovedGuard]
   },
   { path: '**', redirectTo: '' }

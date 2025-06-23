@@ -1,18 +1,20 @@
-<div class="container mx-auto p-6 bg-neutral-50 min-h-screen flex items-center justify-center">
-  <section class="relative w-full h-full min-h-screen flex items-center justify-center overflow-hidden p-2">
-    <div class="absolute inset-0 bg-cover bg-center bg-fixed" 
+<div class="container mx-auto px-4 py-8 bg-neutral-50 min-h-screen flex items-center justify-center sm:px-6 lg:px-8">
+  <section class="relative w-full h-full min-h-screen flex items-center justify-center overflow-hidden p-2 sm:p-4">
+    <div class="absolute inset-0 bg-cover bg-center bg-fixed"
          style="background-image: url('/assets/Congreso.jpg'); background-size: cover; background-repeat: no-repeat; z-index: 0;">
     </div>
     <div class="absolute inset-0 bg-gradient-to-br from-[#e7343a] to-[#942226] opacity-60 z-10"></div>
-    
-    <div class="relative z-20 bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-      <h2 class="text-3xl font-bold text-center text-[#e7343a] mb-6">{{ pageTitle }}</h2>
 
-      <p class="text-base text-gray-600 leading-relaxed mb-8 text-justify">
+    <div class="relative z-20 bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-[#e7343a] mb-6 sm:mb-8">
+        {{ pageTitle }}
+      </h2>
+
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-6 text-justify">
         {{ introParagraph1 }}
         {{ introParagraph2 }}
       </p>
-      <p class="text-base text-gray-600 leading-relaxed mb-8 text-justify">
+      <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-8 text-justify">
         {{ introParagraph3 }}
       </p>
 
@@ -20,8 +22,8 @@
         <div class="mb-5">
           <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">{{ nameLabel }}</label>
           <input type="text" id="nombre" formControlName="nombre"
-                class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                [class.border-red-500]="f['nombre'].invalid && (f['nombre'].dirty || f['nombre'].touched || formSubmitted)">
+                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 [class.border-red-500]="f['nombre'].invalid && (f['nombre'].dirty || f['nombre'].touched || formSubmitted)">
           <div *ngIf="f['nombre'].invalid && (f['nombre'].dirty || f['nombre'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
             <div *ngIf="f['nombre'].errors?.['required']">{{ nameRequiredError }}</div>
             <div *ngIf="f['nombre'].errors?.['minlength']">{{ nameMinLengthError }}</div>
@@ -31,8 +33,8 @@
         <div class="mb-5">
           <label for="email" class="block text-gray-700 text-sm font-bold mb-2">{{ emailLabel }}</label>
           <input type="email" id="email" formControlName="email"
-                class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                [class.border-red-500]="f['email'].invalid && (f['email'].dirty || f['email'].touched || formSubmitted)">
+                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 [class.border-red-500]="f['email'].invalid && (f['email'].dirty || f['email'].touched || formSubmitted)">
           <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
             <div *ngIf="f['email'].errors?.['required']">{{ emailRequiredError }}</div>
             <div *ngIf="f['email'].errors?.['email']">{{ emailInvalidError }}</div>
@@ -42,8 +44,8 @@
         <div class="mb-5">
           <label for="asunto" class="block text-gray-700 text-sm font-bold mb-2">{{ subjectLabel }}</label>
           <input type="text" id="asunto" formControlName="asunto"
-                class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                [class.border-red-500]="f['asunto'].invalid && (f['asunto'].dirty || f['asunto'].touched || formSubmitted)">
+                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                 [class.border-red-500]="f['asunto'].invalid && (f['asunto'].dirty || f['asunto'].touched || formSubmitted)">
           <div *ngIf="f['asunto'].invalid && (f['asunto'].dirty || f['asunto'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
             <div *ngIf="f['asunto'].errors?.['required']">{{ subjectRequiredError }}</div>
             <div *ngIf="f['asunto'].errors?.['minlength']">{{ subjectMinLengthError }}</div>
@@ -53,7 +55,7 @@
         <div class="mb-5">
           <label for="mensaje" class="block text-gray-700 text-sm font-bold mb-2">{{ messageLabel }}</label>
           <textarea id="mensaje" formControlName="mensaje" rows="5"
-                    class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     [class.border-red-500]="f['mensaje'].invalid && (f['mensaje'].dirty || f['mensaje'].touched || formSubmitted)"></textarea>
           <div *ngIf="f['mensaje'].invalid && (f['mensaje'].dirty || f['mensaje'].touched || formSubmitted)" class="text-red-500 text-xs italic mt-2">
             <div *ngIf="f['mensaje'].errors?.['required']">{{ messageRequiredError }}</div>

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { map, switchMap, catchError, tap, take } from 'rxjs/operators'; // Añadido 'take'
+import { map, switchMap, catchError, tap, take } from 'rxjs/operators';
 import { Article } from '../models/article.model';
-import { Comment } from '../models/comment.model'; // <<-- Importado el modelo de comentario
+import { Comment } from '../models/comment.model';
 import { getSupabaseClient } from '../supabase.config';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { AuthService } from './auth'; // <<-- Importado el AuthService
+import { AuthService } from './auth';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +13,10 @@ import { AuthService } from './auth'; // <<-- Importado el AuthService
 export class ArticleService {
   private supabase: SupabaseClient;
 
-  // Inyectamos AuthService aquí para poder acceder a la información del usuario autenticado
   constructor(private authService: AuthService) {
     this.supabase = getSupabaseClient();
   }
 
-  /**
-   * Helper para mapear datos de Supabase (con joins) a tu modelo Article.
-   * Se encarga de extraer el nombre de usuario del objeto 'users' si viene del join.
-   */
   private mapSupabaseArticleToModel(item: any): Article {
     return {
       id: item.id,
@@ -30,18 +25,12 @@ export class ArticleService {
       content: item.content,
       imageUrl: item.image_url,
       created_at: item.created_at,
-      user_id: item.author_id, // Usamos author_id del item de la DB
-      // El nombre del autor puede venir del join (item.users?.username) o de una columna directa (item.author_name)
+      user_id: item.author_id,
       author: item.users ? item.users.username : (item.author_name || 'Autor Desconocido')
     } as Article;
   }
 
-  /**
-   * Obtiene todos los artículos ordenados por fecha de creación descendente.
-   * Realiza un join con la tabla de usuarios (`users!articles_author_id_fkey`) para obtener el nombre del autor.
-   */
   getArticles(): Observable<Article[]> {
-    console.log('ArticleService: Llamada a getArticles().');
     return from(
       this.supabase
         .from('articles')
@@ -53,7 +42,7 @@ export class ArticleService {
           image_url,
           created_at,
           author_id,
-          users!articles_author_id_fkey (username) // <<-- Clave foránea específica de tu configuración de Supabase
+          users!articles_author_id_fkey (username)
         `)
         .order('created_at', { ascending: false })
     ).pipe(
@@ -72,12 +61,7 @@ export class ArticleService {
     );
   }
 
-  /**
-   * Obtiene un artículo específico por su ID.
-   * Realiza un join con la tabla de usuarios para obtener el nombre del autor.
-   */
   getArticleById(id: string): Observable<Article> {
-    console.log('ArticleService: Llamada a getArticleById() para ID:', id);
     return from(
       this.supabase
         .from('articles')
@@ -89,7 +73,7 @@ export class ArticleService {
           image_url,
           created_at,
           author_id,
-          users!articles_author_id_fkey (username) // <<-- Clave foránea específica de tu configuración
+          users!articles_author_id_fkey (username)
         `)
         .eq('id', id)
         .single()
@@ -112,10 +96,6 @@ export class ArticleService {
     );
   }
 
-  /**
-   * Obtiene artículos publicados por un autor específico, usando su ID.
-   * Realiza un join con la tabla de usuarios para obtener el nombre del autor.
-   */
   getArticlesByAuthor(authorId: string): Observable<Article[]> {
     console.log('ArticleService: Llamada a getArticlesByAuthor() para authorId:', authorId);
     return from(
@@ -129,9 +109,9 @@ export class ArticleService {
           image_url,
           created_at,
           author_id,
-          users!articles_author_id_fkey (username) // <<-- Clave foránea específica de tu configuración
+          users!articles_author_id_fkey (username)
         `)
-        .eq('author_id', authorId) // Asumo que el ID del autor se guarda en la columna 'author_id'
+        .eq('author_id', authorId)
         .order('created_at', { ascending: false })
     ).pipe(
       tap(response => console.log('ArticleService: getArticlesByAuthor - Respuesta de Supabase:', response)),
@@ -149,12 +129,7 @@ export class ArticleService {
     );
   }
 
-  /**
-   * Crea un nuevo artículo en la base de datos, asignando al usuario autenticado como autor.
-   * Utiliza `supabase.auth.getUser()` para obtener el ID y nombre de usuario del autor.
-   */
   createArticle(article: Article): Observable<Article> {
-    console.log('ArticleService: Llamada a createArticle() para título:', article.title);
     const currentUserPromise = this.supabase.auth.getUser();
 
     return from(currentUserPromise).pipe(
@@ -172,8 +147,8 @@ export class ArticleService {
           subtitle: article.subtitle,
           content: article.content,
           image_url: article.imageUrl,
-          author_id: data.user.id, // ID del usuario autenticado como autor
-          author_name: username // Nombre de usuario del autor
+          author_id: data.user.id,
+          author_name: username
         };
 
         const { data: insertedData, error: insertError } = await this.supabase
@@ -187,7 +162,7 @@ export class ArticleService {
             image_url,
             created_at,
             author_id,
-            users!articles_author_id_fkey (username) // <<-- Clave foránea específica de tu configuración
+            users!articles_author_id_fkey (username)
           `)
           .single();
 
@@ -206,13 +181,7 @@ export class ArticleService {
     );
   }
 
-  /**
-   * Obtiene los artículos más recientes con un límite.
-   * Incluye el nombre de usuario del autor a través de un join.
-   * Utilizado principalmente en la página de inicio.
-   */
   getRecentArticles(limit: number = 4): Observable<Article[]> {
-    console.log(`ArticleService: Llamada a getRecentArticles(). Obteniendo los ${limit} artículos más recientes...`);
     return from(
       this.supabase
         .from('articles')
@@ -224,7 +193,7 @@ export class ArticleService {
           image_url,
           created_at,
           author_id,
-          users!articles_author_id_fkey (username) // <<-- Clave foránea específica de tu configuración
+          users!articles_author_id_fkey (username)
         `)
         .order('created_at', { ascending: false })
         .limit(limit)
@@ -246,10 +215,9 @@ export class ArticleService {
   }
 
   getCommentsForArticle(articleId: string): Observable<Comment[]> {
-    console.log('ArticleService: Llamada a getCommentsForArticle() para articleId:', articleId);
     return from(
       this.supabase
-        .from('comments') // Nombre de tu tabla de comentarios en Supabase
+        .from('comments') 
         .select(`
           id,
           article_id,
@@ -267,7 +235,6 @@ export class ArticleService {
           console.error('ArticleService: Error al cargar comentarios:', response.error);
           throw response.error;
         }
-        // Mapear los datos para que 'author_username' se obtenga del join con 'users'
         return response.data.map((comment: any) => ({
           id: comment.id,
           article_id: comment.article_id,
@@ -285,21 +252,18 @@ export class ArticleService {
   }
 
   addComment(comment: Partial<Comment>): Observable<Comment> {
-    console.log('ArticleService: Llamada a addComment() para articleId:', comment.article_id);
     const currentUserPromise = this.supabase.auth.getUser();
-
     return from(currentUserPromise).pipe(
       switchMap(async ({ data, error }) => {
         if (error || !data.user) {
           console.error('ArticleService: Error al obtener usuario autenticado para añadir comentario:', error);
           throw new Error('Usuario no autenticado para añadir comentario.');
         }
-        // Obtener el nombre de usuario del metadata de Supabase Auth
         const username = data.user.user_metadata?.['username'] || data.user.email;
         const fullComment: Comment = {
           article_id: comment.article_id!,
           user_id: data.user.id,
-          author_username: username, // Se guarda directamente en la tabla de comentarios
+          author_username: username,
           content: comment.content!
         };
         
@@ -307,16 +271,13 @@ export class ArticleService {
         const { data: insertedCommentData, error: insertCommentError } = await this.supabase
           .from('comments')
           .insert(fullComment)
-          .select() // Para obtener el comentario insertado con su ID y created_at
+          .select()
           .single();
 
         if (insertCommentError) {
           console.error('ArticleService: Error al insertar comentario en la base de datos:', insertCommentError);
           throw insertCommentError;
         }
-        console.log('ArticleService: Comentario insertado con éxito:', insertedCommentData);
-        
-        // Devolvemos el comentario completo, incluyendo el username que ya tenemos del usuario autenticado
         return {
           ...insertedCommentData,
           author_username: username
@@ -325,6 +286,125 @@ export class ArticleService {
       catchError(err => {
         console.error('ArticleService: Error atrapado en addComment:', err);
         return throwError(() => err);
+      })
+    );
+  }
+  
+  updateArticle(articleId: string, updatedArticle: Partial<Article>): Observable<Article> {
+    return from(this.supabase.auth.getUser()).pipe(
+      switchMap(async ({ data: userData, error: userError }) => {
+        if (userError || !userData.user) {
+          console.error('ArticleService: Error al obtener usuario autenticado para actualizar artículo:', userError);
+          throw new Error('Usuario no autenticado.');
+        }
+
+        const currentUserId = userData.user.id;
+        const { data: existingArticle, error: fetchError } = await this.supabase
+          .from('articles')
+          .select('author_id')
+          .eq('id', articleId)
+          .single();
+
+        if (fetchError) {
+          console.error('ArticleService: Error al buscar artículo para actualizar:', fetchError);
+          throw fetchError;
+        }
+        if (!existingArticle) {
+          throw new Error('Artículo no encontrado.');
+        }
+        if (existingArticle.author_id !== currentUserId) {
+          console.warn('ArticleService: Intento de actualización de artículo no autorizado por el usuario:', currentUserId);
+          throw new Error('No tienes permiso para actualizar este artículo.');
+        }
+
+        const updateData: {
+          title?: string;
+          subtitle?: string;
+          content?: string;
+          image_url?: string | null;
+        } = {};
+
+        if (updatedArticle.title !== undefined) updateData.title = updatedArticle.title;
+        if (updatedArticle.subtitle !== undefined) updateData.subtitle = updatedArticle.subtitle;
+        if (updatedArticle.content !== undefined) updateData.content = updatedArticle.content;
+        if (updatedArticle.imageUrl !== undefined) {
+          updateData.image_url = updatedArticle.imageUrl === null ? null : updatedArticle.imageUrl;
+        }
+
+        const { data: updatedData, error: updateError } = await this.supabase
+          .from('articles')
+          .update(updateData)
+          .eq('id', articleId)
+          .select(`
+            id,
+            title,
+            subtitle,
+            content,
+            image_url,
+            created_at,
+            author_id,
+            users!articles_author_id_fkey (username)
+          `)
+          .single();
+
+        if (updateError) {
+          console.error('ArticleService: Error al actualizar el artículo:', updateError);
+          throw updateError;
+        }
+
+        console.log('ArticleService: Artículo actualizado con éxito:', updatedData);
+        return this.mapSupabaseArticleToModel(updatedData);
+      }),
+      catchError(error => {
+        console.error('ArticleService: Error atrapado en updateArticle:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteArticle(articleId: string): Observable<void> {
+    return from(this.supabase.auth.getUser()).pipe(
+      switchMap(async ({ data: userData, error: userError }) => {
+        if (userError || !userData.user) {
+          console.error('ArticleService: Error al obtener usuario autenticado para eliminar artículo:', userError);
+          throw new Error('Usuario no autenticado.');
+        }
+
+        const currentUserId = userData.user.id;
+        const { data: existingArticle, error: fetchError } = await this.supabase
+          .from('articles')
+          .select('author_id')
+          .eq('id', articleId)
+          .single();
+
+        if (fetchError) {
+          console.error('ArticleService: Error al buscar artículo para eliminar:', fetchError);
+          throw fetchError;
+        }
+        if (!existingArticle) {
+          throw new Error('Artículo no encontrado.');
+        }
+        if (existingArticle.author_id !== currentUserId) {
+          console.warn('ArticleService: Intento de eliminación de artículo no autorizado por el usuario:', currentUserId);
+          throw new Error('No tienes permiso para eliminar este artículo.');
+        }
+
+        const { error: deleteError } = await this.supabase
+          .from('articles')
+          .delete()
+          .eq('id', articleId);
+
+        if (deleteError) {
+          console.error('ArticleService: Error al eliminar el artículo:', deleteError);
+          throw deleteError;
+        }
+
+        console.log('ArticleService: Artículo eliminado con éxito:', articleId);
+        return;
+      }),
+      catchError(error => {
+        console.error('ArticleService: Error atrapado en deleteArticle:', error);
+        return throwError(() => error);
       })
     );
   }

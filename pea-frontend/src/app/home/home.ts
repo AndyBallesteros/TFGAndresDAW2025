@@ -18,7 +18,7 @@ import { finalize } from 'rxjs/operators';
 export class HomeComponent implements OnInit {
 
   heroTitle: string = 'Politólogos en Acción: Una Fuente para el Análisis Político Riguroso';
-  heroSubtitle: string = 'Un portal dedicado a la discusión informada y profunda de la ciencia política y las relaciones internacionales.';
+  heroSubtitle: string = 'Un portal dedicado al análisis y la discusión sobre la ciencia política y las relaciones internacionales.';
   heroCtaJoin: string = 'Únete a la Comunidad';
   heroCtaExplore: string = 'Explora Artículos';
 

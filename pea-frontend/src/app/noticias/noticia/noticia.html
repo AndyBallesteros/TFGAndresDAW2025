@@ -1,34 +1,38 @@
-<div class="container mx-auto p-6 bg-neutral-50 min-h-screen">
+<div class="container mx-auto px-4 py-8 bg-neutral-50 min-h-screen sm:px-6 lg:px-8">
 
   <div *ngIf="isLoading" class="text-center py-8">
     <p class="text-lg text-neutral-700">{{ loadingMessage }}</p>
   </div>
 
-  <div *ngIf="errorMessage && !isLoading" class="bg-red-100 text-red-700 p-4 rounded-md text-center">
+  <div *ngIf="errorMessage && !isLoading" class="bg-red-100 text-red-700 p-4 rounded-md text-center border border-red-400">
     <p>{{ errorMessage }}</p>
   </div>
 
-  <div *ngIf="article && !isLoading && !errorMessage" class="bg-white rounded-lg shadow-lg p-8 mb-8 max-w-4xl mx-auto">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-[#e7343a] mb-4 text-center">{{ article.title }}</h1>
-    <p class="text-xl md:text-2xl text-gray-700 mb-6 text-center italic">{{ article.subtitle }}</p>
+  <div *ngIf="article && !isLoading && !errorMessage" class="bg-white rounded-lg shadow-lg p-6 sm:p-8 lg:p-10 mb-8 max-w-full md:max-w-4xl mx-auto">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#e7343a] mb-3 sm:mb-4 text-center leading-tight">
+      {{ article.title }}
+    </h1>
+    <p class="text-lg sm:text-xl text-gray-700 mb-5 text-center italic leading-relaxed">
+      {{ article.subtitle }}
+    </p>
 
-    <div class="text-sm text-gray-500 mb-6 flex justify-center space-x-4">
+    <div class="text-xs sm:text-sm text-gray-500 mb-6 flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-1 sm:space-y-0">
       <span>{{ byAuthorText }} <span class="font-medium text-gray-600">{{ article.author || 'Autor Desconocido' }}</span></span>
       <span>{{ publishedOnText }} <span class="font-medium text-gray-600">{{ formatDate(article.created_at) }}</span></span>
     </div>
 
     <div *ngIf="article.imageUrl" class="mb-8 overflow-hidden rounded-lg">
-      <img [src]="article.imageUrl" [alt]="article.title" class="w-full h-auto max-h-[450px] object-cover rounded-lg shadow-md">
+      <img [src]="article.imageUrl" [alt]="article.title" class="w-full h-auto max-h-[300px] sm:max-h-[400px] md:max-h-[500px] object-cover rounded-lg shadow-md">
     </div>
 
-    <div class="prose max-w-none text-gray-800 leading-relaxed text-lg mb-8">
+    <div class="prose max-w-none text-gray-800 leading-relaxed text-base sm:text-lg mb-8">
       <p>{{ article.content }}</p>
     </div>
 
     <div class="text-center mt-8">
       <a [routerLink]="['/noticias']"
-         class="bg-[#1d4ed8] hover:bg-[#301dd8] text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-lg inline-flex items-center">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+         class="bg-[#1d4ed8] hover:bg-[#301dd8] text-white font-bold py-2.5 px-6 sm:py-3 sm:px-8 rounded-full text-base sm:text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-lg inline-flex items-center">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
         {{ backToNewsButtonText }}

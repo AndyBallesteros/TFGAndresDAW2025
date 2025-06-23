@@ -1,48 +1,48 @@
-<section class="bg-white rounded-lg shadow-lg p-8 mt-8">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-primary-500 pb-2">
+<section class="bg-white rounded-lg shadow-lg p-6 sm:p-8 mt-8">
+  <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6 border-b-2 border-[#e7343a] pb-2">
     {{ commentsSectionTitle }}
   </h2>
 
   <div *ngIf="isLoadingComments && !commentErrorMessage" class="text-center text-blue-600 my-4">
     <p>Cargando comentarios...</p>
   </div>
-  <div *ngIf="commentErrorMessage" class="bg-red-100 text-red-700 p-4 rounded-md text-center my-4">
+  <div *ngIf="commentErrorMessage" class="bg-red-100 text-red-700 p-4 rounded-md text-center my-4 border border-red-400">
     <p>{{ commentErrorMessage }}</p>
   </div>
 
   <div *ngIf="!isLoadingComments && !commentErrorMessage">
-    <div *ngIf="comments.length === 0" class="text-center text-gray-500 py-4">
+    <div *ngIf="comments.length === 0" class="text-center text-gray-500 py-4 text-base sm:text-lg">
       <p>{{ noCommentsMessage }}</p>
     </div>
     <div *ngFor="let comment of comments" class="border-b border-gray-200 last:border-b-0 py-4">
       <div class="flex items-start">
-        <div class="flex-shrink-0 mr-3">
-          <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div class="flex-shrink-0 mr-3 sm:mr-4">
+          <svg class="h-7 w-7 sm:h-8 sm:w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
         <div class="flex-grow">
-          <div class="flex justify-between items-baseline">
-            <p class="font-bold text-gray-900">{{ comment.author_username || 'Usuario Anónimo' }}</p>
-            <p class="text-xs text-gray-500">{{ formatCommentDate(comment.created_at) }}</p>
+          <div class="flex flex-col sm:flex-row justify-between sm:items-baseline">
+            <p class="font-bold text-gray-900 text-sm sm:text-base">{{ comment.author_username || 'Usuario Anónimo' }}</p>
+            <p class="text-xs text-gray-500 mt-1 sm:mt-0">{{ formatCommentDate(comment.created_at) }}</p>
           </div>
-          <p class="text-gray-700 mt-1">{{ comment.content }}</p>
+          <p class="text-sm sm:text-base text-gray-700 mt-1">{{ comment.content }}</p>
         </div>
       </div>
     </div>
   </div>
 
   <div class="mt-8 pt-6 border-t border-gray-200">
-    <div *ngIf="!currentUser" class="text-center text-gray-600 p-4 bg-blue-50 rounded-md">
+    <div *ngIf="!currentUser" class="text-center text-gray-600 p-4 bg-blue-50 rounded-md text-base sm:text-lg">
       <p>{{ signInToCommentMessage }}</p>
     </div>
 
     <form *ngIf="currentUser" [formGroup]="commentForm" (ngSubmit)="onSubmitComment()" class="space-y-4">
       <div>
-        <label for="commentContent" class="block text-sm font-medium text-gray-700">{{ yourCommentLabel }}</label>
+        <label for="commentContent" class="block text-sm font-medium text-gray-700 mb-1">{{ yourCommentLabel }}</label>
         <textarea id="commentContent" formControlName="content" rows="4"
                   [placeholder]="commentPlaceholder"
-                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm resize-y"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#e7343a] focus:border-[#e7343a] sm:text-sm resize-y"
                   [class.border-red-500]="commentForm.get('content')?.invalid && (commentForm.get('content')?.dirty || commentForm.get('content')?.touched)"></textarea>
-        
+
         <div *ngIf="commentForm.get('content')?.invalid && (commentForm.get('content')?.dirty || commentForm.get('content')?.touched)" class="text-red-500 text-xs mt-1">
           <div *ngIf="commentForm.get('content')?.errors?.['required']">{{ commentRequiredError }}</div>
           <div *ngIf="commentForm.get('content')?.errors?.['minlength']">{{ commentMinLengthError }}</div>
@@ -50,12 +50,11 @@
         </div>
       </div>
 
-      <!-- Mensajes de éxito/error del envío del comentario -->
       <p *ngIf="commentSuccessMessage" class="text-green-600 text-sm text-center">{{ commentSuccessMessage }}</p>
       <p *ngIf="commentErrorMessage && !isLoadingComments" class="text-red-500 text-sm text-center">{{ commentErrorMessage }}</p>
 
       <button type="submit" [disabled]="commentForm.invalid || isLoadingComments"
-              class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-300"
+              class="w-full bg-[#e7343a] hover:bg-[#942226] text-white font-bold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e7343a] transition duration-300"
               [ngClass]="{'opacity-50 cursor-not-allowed': commentForm.invalid || isLoadingComments}">
         <span *ngIf="isLoadingComments" class="inline-block w-4 h-4 mr-2 border-2 border-solid border-white border-r-transparent rounded-full animate-spin" role="status" aria-hidden="true"></span>
         {{ isLoadingComments ? commentSendingText : postCommentButtonText }}
