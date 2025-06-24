@@ -15,7 +15,7 @@ export class NoticiasListComponent implements OnInit {
   articles: Article[] = [];
   paginatedArticles: Article[]=[];
   currentPage: number=1;
-  itemsPerPage: number=9;
+  itemsPerPage: number=6;
   totalPages: number=0;
   pages: number[]=[];
   isLoading = true;
