@@ -45,11 +45,7 @@ export class AuthService {
   }
 
   private async loadUserProfile(userId: string): Promise<void> {
-    console.log('AuthService: Cargando perfil para userId:', userId);
-
     const { data: { user: supabaseAuthUser }, error: getUserError } = await this.supabase.auth.getUser();
-    console.log('AuthService: loadUserProfile - Resultado de getUser:', { supabaseAuthUser, getUserError });
-
     if (getUserError || !supabaseAuthUser) {
         console.error('AuthService: Error o usuario de autenticación no encontrado en loadUserProfile:', getUserError);
         this.userSubject.next(null);
@@ -66,12 +62,10 @@ export class AuthService {
       .select('username, is_approved')
       .eq('id', userId)
       .single();
-    console.log('AuthService: loadUserProfile - Resultado de SELECT de users:', { userProfile, profileError });
-
-    if (profileError) {
-      console.error('AuthService: Error al cargar perfil de usuario de la tabla "users" en loadUserProfile:', JSON.stringify(profileError, null, 2));
-      this.userSubject.next(null);
-      return;
+      if (profileError) {
+        console.error('AuthService: Error al cargar perfil de usuario de la tabla "users" en loadUserProfile:', JSON.stringify(profileError, null, 2));
+        this.userSubject.next(null);
+        return;
     }
 
     if (userProfile) {
@@ -81,17 +75,14 @@ export class AuthService {
         username: userProfile.username,
         isApproved: userProfile.is_approved
       };
-      console.log('AuthService: Perfil de usuario cargado y asignado:', appUser);
       this.userSubject.next(appUser);
     } else {
       console.warn(`AuthService: Perfil no encontrado para el usuario ${userId} en la tabla "users".`);
       this.userSubject.next(null);
     }
-    console.log('AuthService: loadUserProfile completado para userId:', userId);
   }
 
   register(username: string, email: string, password: string): Observable<any> {
-    console.log('AuthService: Iniciando registro en Supabase Auth...');
     return from(this.supabase.auth.signUp({
       email: email,
       password: password,
@@ -102,18 +93,15 @@ export class AuthService {
       }
     })).pipe(
       tap(supabaseRes => {
-          console.log('AuthService: Respuesta de signUp de Supabase (tap):', supabaseRes);
           if (supabaseRes.error) {
             console.error('AuthService: Error en signUp de Supabase (tap):', supabaseRes.error);
           }
       }),
       map(({ data: authData, error: authError }) => {
-        console.log('AuthService: map de signUp - authData:', authData, 'authError:', authError);
         if (authError) {
           console.error('AuthService: Error en auth.signUp -', authError);
           throw authError;
         }
-        console.log('AuthService: Proceso de signUp completado. La creación del perfil en "users" será manejada por el trigger de la base de datos.');
         return authData;
       }),
       catchError(err => {
@@ -124,7 +112,6 @@ export class AuthService {
   }
   
   login(email: string, password: string): Observable<any> {
-    console.log('AuthService: Iniciando login en Supabase Auth con email:', email);
     return from(this.supabase.auth.signInWithPassword({ email, password })).pipe(
       tap(supabaseRes => {
         console.log('AuthService: Respuesta de signInWithPassword (tap):', supabaseRes);
@@ -133,13 +120,11 @@ export class AuthService {
         }
       }),
       switchMap(async ({ data, error }) => {
-        console.log('AuthService: Inside switchMap - data:', data, 'error:', error);
         if (error) {
           console.error('AuthService: Error en auth.signInWithPassword desde switchMap -', error);
           throw error; 
         }
         if (data.user) {
-          console.log('AuthService: Supabase Auth login exitoso para el usuario:', data.user.id);
           return data; 
         } else {
             console.warn('AuthService: signInWithPassword retornó sin datos de usuario. Esto podría indicar que el email no está confirmado.');
@@ -154,7 +139,6 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    console.log('AuthService: Iniciando logout.');
     return from(this.supabase.auth.signOut()).pipe(
       tap(() => {
         console.log('AuthService: Logout completado.');
@@ -169,21 +153,16 @@ export class AuthService {
   }
 
   async getToken(): Promise<string | null> {
-    console.log('AuthService: Solicitando token JWT...');
     try {
       const { data: sessionData, error: sessionError } = await this.supabase.auth.getSession();
-      console.log('AuthService: getSession() en getToken() - sessionData:', sessionData, 'sessionError:', sessionError);
-
       if (sessionError) {
         console.error('AuthService: Error al obtener sesión en getToken():', sessionError.message);
         return null;
       }
       
       if (sessionData && sessionData.session) {
-        console.log('AuthService: Sesión encontrada en getToken(). Token:', sessionData.session.access_token ? 'disponible' : 'null');
         return sessionData.session.access_token;
       } else {
-        console.log('AuthService: No se encontró sesión activa en getToken().');
         return null;
       }
     } catch (e: any) {

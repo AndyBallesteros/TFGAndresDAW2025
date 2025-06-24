@@ -148,9 +148,9 @@ export class EditArticleComponent implements OnInit {
     if (this.selectedFile && this.isNewFileSelected()) {
       this.isUploadingImage = true;
       try {
-        const path = `article_images/${Date.now()}_${this.selectedFile.name}`;
+        const path = `article-images/${Date.now()}_${this.selectedFile.name}`;
         const { data, error } = await this.articleService['supabase'].storage
-          .from('article_images')
+          .from('article-images')
           .upload(path, this.selectedFile, {
             cacheControl: '3600',
             upsert: true,
@@ -161,7 +161,7 @@ export class EditArticleComponent implements OnInit {
         }
 
         const { data: publicUrlData } = this.articleService['supabase'].storage
-          .from('article_images')
+          .from('article-images')
           .getPublicUrl(path);
 
         if (publicUrlData) {

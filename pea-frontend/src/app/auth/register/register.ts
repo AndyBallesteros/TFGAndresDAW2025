@@ -125,7 +125,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     const { username, email, password } = this.registerForm.value;
     this.authService.register(username, email, password).subscribe({
       next: (res) => {
-        console.log('RegisterComponent: Registro exitoso en Supabase:', res);
         this.router.navigate(['/email-confirmation']);
         this.isLoading = false;
         this.resetRecaptcha();

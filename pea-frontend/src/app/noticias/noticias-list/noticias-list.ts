@@ -13,6 +13,11 @@ import { ArticleCardComponent } from '../../article-card/article-card';
 })
 export class NoticiasListComponent implements OnInit {
   articles: Article[] = [];
+  paginatedArticles: Article[]=[];
+  currentPage: number=1;
+  itemsPerPage: number=9;
+  totalPages: number=0;
+  pages: number[]=[];
   isLoading = true;
   errorMessage: string | null = null;
 
@@ -23,7 +28,6 @@ export class NoticiasListComponent implements OnInit {
   articlesErrorMessage: string = 'Error al cargar las noticias. Por favor, inténtalo de nuevo más tarde.';
   noArticlesMessage: string = 'No hay noticias disponibles en este momento.';
   noArticlesCallToAction: string = '¡Sé el primero en publicar una!';
-  footerText: string = 'Portal de Divulgación Científica. Todos los derechos reservados.';
 
   constructor(private articleService: ArticleService) {}
 
@@ -37,6 +41,8 @@ export class NoticiasListComponent implements OnInit {
     this.articleService.getArticles().subscribe({
       next: (data) => {
         this.articles = data;
+        this.calculatePagination();
+        this.setPage(1);
         this.isLoading = false;
       },
       error: (err) => {
@@ -45,5 +51,27 @@ export class NoticiasListComponent implements OnInit {
         console.error('Error fetching articles:', err);
       }
     });
+  }
+  calculatePagination(): void{
+    this.totalPages= Math.ceil(this.articles.length /this.itemsPerPage);
+    this.pages= Array.from({length: this.totalPages}, (_,i)=> i+1)
+  }
+
+  setPage(pageNumber:number): void {
+    if (pageNumber<1 || pageNumber>this.totalPages) {
+      return;
+    }
+    this.currentPage=pageNumber;
+    const startIndex= (this.currentPage-1)*this.itemsPerPage;
+    const endIndex= startIndex+this.itemsPerPage;
+    this.paginatedArticles=this.articles.slice(startIndex,endIndex);
+  }
+
+  prevPage(): void{
+    this.setPage(this.currentPage-1);
+  }
+
+  nextPage(): void{
+    this.setPage(this.currentPage +1);
   }
 }
